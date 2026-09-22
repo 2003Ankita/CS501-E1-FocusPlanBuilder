@@ -15,10 +15,11 @@
 3. [Screenshots](#screenshots)
 4. [Running the App](#running-the-app)
 5. [How the App Works](#how-the-app-works)
-6. [State and Recomposition](#state-and-recomposition)
-7. [Validation and Testing](#validation-and-testing)
-8. [Visual Design](#visual-design)
-9. [AI Use](#ai-use)
+6. [Project Structure](#project-structure)
+7. [State and Recomposition](#state-and-recomposition)
+8. [Validation and Testing](#validation-and-testing)
+9. [Visual Design](#visual-design)
+10. [AI Use](#ai-use)
 
 ---
 
@@ -183,6 +184,50 @@ the previous result so that the displayed plan always corresponds to the
 current input.
 
 ---
+## Project Structure
+
+The application is organized into separate model, presentation, component,
+and theme files to keep state management, business logic, and UI concerns
+clearly separated.
+
+```text
+app/src/main/java/com/ankitapatra/focusplanbuilder/
+├── MainActivity.kt
+├── model/
+│   ├── FocusPlan.kt
+│   ├── DurationCategory.kt
+│   └── BreakRecommendation.kt
+├── presentation/
+│   ├── FocusPlanRoute.kt
+│   ├── FocusPlanScreen.kt
+│   └── components/
+│       ├── FocusPlanHeader.kt
+│       ├── PlanInputCard.kt
+│       ├── QuickPickButtons.kt
+│       ├── CreatePlanButton.kt
+│       └── FocusPlanResultCard.kt
+└── ui/
+    └── theme/
+        ├── Color.kt
+        ├── Theme.kt
+        └── Type.kt
+
+app/src/test/java/com/ankitapatra/focusplanbuilder/
+├── DurationCategoryTest.kt
+├── RecommendedBreakTest.kt
+└── FocusPlanTest.kt
+```
+
+`model` contains the `FocusPlan` data model and reusable duration and break
+rules. `presentation` contains the route that owns application state and the
+screen that arranges the UI. Reusable Compose elements are separated into
+`presentation/components`, while Material 3 colors and styling remain in
+`ui/theme`.
+
+Unit tests are kept under `app/src/test` and verify the duration-category
+boundaries, recommended break values, and `FocusPlan` data model.
+
+---
 
 ## State and Recomposition
 
@@ -213,7 +258,24 @@ by setting it to `null`.
 
 ## Validation and Testing
 
-The application was manually tested using the required assignment test cases.
+The application was tested using both automated unit tests and manual testing.
+
+### Automated Unit Tests
+
+Three unit-test files verify the reusable model and business-logic components:
+
+- `DurationCategoryTest.kt` verifies the category boundaries, including 9, 10,
+  29, 30, 60, 61, and 180 minutes.
+- `RecommendedBreakTest.kt` verifies the 5-, 10-, and 15-minute break rules and
+  the invalid-duration case.
+- `FocusPlanTest.kt` verifies that the `FocusPlan` data class stores the subject,
+  duration, category, and recommended break correctly.
+
+All automated unit tests pass successfully.
+
+### Manual Testing
+
+The application was also manually tested using the required assignment test cases.
 
 | Subject | Duration | Expected Result |
 |---|---:|---|

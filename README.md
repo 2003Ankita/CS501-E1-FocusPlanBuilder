@@ -235,8 +235,7 @@ interface clear and visually organized.
 ## AI Use
 
 Generative AI (ChatGPT by OpenAI) was used to assist with identifying an
-appropriate Compose structure, debugging implementation issues, refining the
-Material 3 interface, reviewing the required test cases, and organizing the
+appropriate Compose structure, suggestions,and  reviewing the required test cases, and organizing the
 README documentation. AI-generated suggestions that were retained were
 reviewed, implemented, and manually tested. The final application behavior
 and assignment requirements were verified against the implemented code.

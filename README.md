@@ -4,6 +4,7 @@
 **Course:** CS501 E1  
 **Assignment:** Individual Coding Assignment 2 — Focus Plan Builder  
 **Package:** `com.ankitapatra.focusplanbuilder`
+**Repository:** [CS501-E1-FocusPlanBuilder](https://github.com/2003Ankita/CS501-E1-FocusPlanBuilder)
 
 ---
 

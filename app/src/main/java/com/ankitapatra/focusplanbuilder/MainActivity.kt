@@ -47,6 +47,15 @@ import com.ankitapatra.focusplanbuilder.ui.theme.FocusGreenLight
 import com.ankitapatra.focusplanbuilder.ui.theme.FocusTextPrimary
 import com.ankitapatra.focusplanbuilder.ui.theme.FocusGreenDark
 import com.ankitapatra.focusplanbuilder.ui.theme.FocusError
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
+import com.ankitapatra.focusplanbuilder.ui.theme.FocusPeach
+import com.ankitapatra.focusplanbuilder.ui.theme.FocusPink
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,17 +134,51 @@ fun FocusPlanScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(FocusBackground)
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFFFFF3EC),
+                        Color(0xFFFFF7F4),
+                        Color(0xFFF8F0FF),
+                        Color(0xFFFFF4EC)
+                    )
+                )
+            )
             .statusBarsPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 20.dp)
     ) {
-        Text(
-            text = "Focus Plan Builder",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = FocusPurple
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Card(
+                shape = RoundedCornerShape(22.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = FocusPurpleLight
+                )
+            ) {
+                Text(
+                    text = "📚🌱",
+                    modifier = Modifier.padding(
+                        horizontal = 18.dp,
+                        vertical = 12.dp
+                    ),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+
+            Text(
+                text = "Focus Plan Builder",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = FocusPurple
+            )
+        }
 
         Spacer(
             modifier = Modifier.height(8.dp)
@@ -143,8 +186,10 @@ fun FocusPlanScreen(
 
         Text(
             text = "Build your perfect study session.\nOne focused session at a time.",
+            modifier = Modifier.fillMaxWidth(),
             style = MaterialTheme.typography.bodyLarge,
-            color = FocusTextSecondary
+            color = FocusTextSecondary,
+            textAlign = TextAlign.Center
         )
 
         Spacer(
@@ -155,18 +200,29 @@ fun FocusPlanScreen(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
             colors = CardDefaults.cardColors(
-                containerColor = FocusSurface
+                containerColor = FocusPeach
             )
         ) {
             Column(
                 modifier = Modifier.padding(20.dp)
             ) {
-                Text(
-                    text = "What are you studying?",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = FocusPurple
-                )
+                Card(
+                    shape = RoundedCornerShape(10.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = FocusPurpleLight
+                    )
+                ) {
+                    Text(
+                        text = "📚  What are you studying?",
+                        modifier = Modifier.padding(
+                            horizontal = 10.dp,
+                            vertical = 6.dp
+                        ),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = FocusPurpleDark
+                    )
+                }
 
                 Spacer(
                     modifier = Modifier.height(8.dp)
@@ -181,18 +237,35 @@ fun FocusPlanScreen(
                         Text("e.g., Kotlin, Databases, Compose state")
                     },
                     singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = FocusSurface,
+                        unfocusedContainerColor = FocusSurface,
+                        disabledContainerColor = FocusSurface
+                    ),
+                    shape = RoundedCornerShape(14.dp),
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(
                     modifier = Modifier.height(20.dp)
                 )
-                Text(
-                    text = "How much time do you have?",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = FocusPurple
-                )
+                Card(
+                    shape = RoundedCornerShape(10.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = FocusGreenLight
+                    )
+                ) {
+                    Text(
+                        text = "⏱️  How much time do you have?",
+                        modifier = Modifier.padding(
+                            horizontal = 10.dp,
+                            vertical = 6.dp
+                        ),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = FocusGreenDark
+                    )
+                }
 
                 Spacer(
                     modifier = Modifier.height(8.dp)
@@ -217,6 +290,12 @@ fun FocusPlanScreen(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
                     ),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = FocusSurface,
+                        unfocusedContainerColor = FocusSurface,
+                        disabledContainerColor = FocusSurface
+                    ),
+                    shape = RoundedCornerShape(14.dp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(
@@ -232,12 +311,23 @@ fun FocusPlanScreen(
                     modifier = Modifier.height(16.dp)
                 )
 
-                Text(
-                    text = "Quick picks",
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = FocusTextSecondary
-                )
+                Card(
+                    shape = RoundedCornerShape(10.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = FocusPink
+                    )
+                ) {
+                    Text(
+                        text = "⚡  Quick picks",
+                        modifier = Modifier.padding(
+                            horizontal = 10.dp,
+                            vertical = 6.dp
+                        ),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = FocusPurpleDark
+                    )
+                }
                 Spacer(
                     modifier = Modifier.height(8.dp)
                 )
@@ -258,7 +348,12 @@ fun FocusPlanScreen(
                                 containerColor = if (isSelected) {
                                     FocusPurpleLight
                                 } else {
-                                    FocusSurface
+                                    when (duration) {
+                                        15 -> FocusPink
+                                        25 -> FocusGreenLight
+                                        45 -> FocusPeach
+                                        else -> FocusSurface
+                                    }
                                 },
                                 contentColor = if (isSelected) {
                                     FocusPurpleDark
@@ -312,6 +407,14 @@ fun FocusPlanScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
+            border = BorderStroke(
+                width = 1.dp,
+                color = if (canCreatePlan) {
+                    FocusPurple
+                } else {
+                    FocusPurpleLight
+                }
+            ),
             shape = RoundedCornerShape(18.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = FocusPurple,
@@ -321,7 +424,7 @@ fun FocusPlanScreen(
             )
         ) {
             Text(
-                text = "Create plan",
+                text = "✦  Create plan",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -441,6 +544,22 @@ fun FocusPlanScreen(
                     }
                 }
             }
+            Spacer(
+                modifier = Modifier.height(32.dp)
+            )
+
+            Text(
+                text = "Small steps.\nBig progress.",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = FocusPurpleDark
+            )
+
+            Spacer(
+                modifier = Modifier.height(20.dp)
+            )
         }
     }
 }

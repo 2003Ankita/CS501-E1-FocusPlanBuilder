@@ -11,7 +11,7 @@
 
 1. [Overview](#overview)
 2. [Features](#features)
-3. [Screenshot](#screenshot)
+3. [Screenshots](#screenshots)
 4. [Running the App](#running-the-app)
 5. [How the App Works](#how-the-app-works)
 6. [State and Recomposition](#state-and-recomposition)
@@ -83,15 +83,37 @@ XML layouts, Fragments, or legacy Android Views.
 
 ---
 
-## Screenshot
+## Screenshots
 
-### Generated Focus Plan
+The following screenshots demonstrate the main study-plan categories, input
+validation behavior, and state preservation during screen rotation.
 
-![Focus Plan Builder](screenshots/focus_plan_builder.png)
+### Study Plan Categories
 
-The screenshot shows a valid plan for **Kotlin** with a **60-minute**
-duration. The application categorizes it as a **Focused session** and
-recommends a **10-minute break**.
+| Quick Review — 10 Minutes | Focused Session — 60 Minutes | Extended Session — 61 Minutes |
+|---|---|---|
+| ![Quick Review](screenshots/quick_review.png) | ![Focused Session](screenshots/focus_plan_builder.png) | ![Extended Session](screenshots/extended_session.png) |
+| **Quick review** with a **5-minute** recommended break. | **Focused session** with a **10-minute** recommended break. | **Extended session** with a **15-minute** recommended break. |
+
+These scenarios demonstrate the three duration categories produced by
+`durationCategory()` and the corresponding break values returned by
+`recommendedBreak()`.
+
+### Input Validation
+
+| Non-Numeric Input | Out-of-Range Input |
+|---|---|
+| ![Invalid Duration](screenshots/invalid_duration.png) | ![Out of Range](screenshots/out_of_range.png) |
+| Entering `abc` keeps **Create plan** disabled and displays validation feedback without crashing the app. | Entering `181` keeps **Create plan** disabled because the valid range ends at 180 minutes. |
+
+### Screen Rotation
+
+| Landscape Orientation |
+|---|
+| ![Landscape](screenshots/landscape.png) |
+| The subject and duration inputs remain available after rotation because they are stored using `rememberSaveable`. |
+
+---
 
 ---
 
@@ -131,6 +153,7 @@ field. It is converted safely when needed:
 
 ```kotlin
 val minutes: Int? = minutesText.toIntOrNull()
+```
 
 The enabled state of the **Create plan** button is derived directly from the
 current inputs:
@@ -205,13 +228,38 @@ The application was manually tested using the required assignment test cases.
 | Kotlin | 180 | Extended session; 15-minute break |
 | Kotlin | 181 | Create plan disabled |
 
-Additional manual checks were performed to verify that:
+### Additional Manual Test Scenarios
 
-- Erasing the duration does not crash the application.
-- Subject and duration inputs survive screen rotation.
-- Editing either input after creating a plan removes the previous result.
-- The **Create plan** button updates automatically when input validity changes.
-- A whitespace-only subject is treated as blank.
+In addition to the required test cases above, the following behaviors were
+manually verified:
+
+- Erasing the duration after entering a value does not crash the application.
+- Entering non-numeric input such as `abc` does not crash the application.
+- A subject containing only whitespace is treated as blank.
+- Subject and duration inputs remain available after screen rotation.
+- Editing the subject after creating a plan removes the previous result.
+- Editing the duration after creating a plan removes the previous result.
+- The **Create plan** button automatically updates when the validity of either
+  input changes.
+- Quick-pick buttons for **15, 25, 45, and 60 minutes** correctly update the
+  duration field.
+- The live preview displays the corresponding session category and recommended
+  break for a valid duration.
+- The interface remains scrollable and usable in landscape orientation.
+
+### Boundary Coverage
+
+The required tests verify the boundaries between all three duration
+categories:
+
+- **10 and 29 minutes** → Quick review with a 5-minute break.
+- **30 and 60 minutes** → Focused session with a 10-minute break.
+- **61 and 180 minutes** → Extended session with a 15-minute break.
+- Values below **10** or above **180** keep **Create plan** disabled.
+
+The screenshots above provide visual examples of Quick review, Focused
+session, Extended session, non-numeric input, out-of-range input, and screen
+rotation.
 
 ---
 
@@ -235,7 +283,6 @@ interface clear and visually organized.
 ## AI Use
 
 Generative AI (ChatGPT by OpenAI) was used to assist with identifying an
-appropriate Compose structure, suggestions,and  reviewing the required test cases, and organizing the
-README documentation. AI-generated suggestions that were retained were
+appropriate Compose structure, UI refinement,review of the required test cases, and README organization. AI-generated suggestions that were retained were
 reviewed, implemented, and manually tested. The final application behavior
 and assignment requirements were verified against the implemented code.
